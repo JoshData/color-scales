@@ -103,7 +103,7 @@
         </div>
         <div>
         	Number:
-        	<select name="numcolors">
+        	<select name="num">
         		<option>3</option>
         		<option>5</option>
         		<option>9</option>
@@ -148,7 +148,12 @@
         <script src="dist/color_scales.js"></script>
 
         <script>
-function generate_scale(color1, color2, color3, numsegments) {
+function generate_scale() {
+	var color1 = $('input[name=color1]:checked').val(),
+    	color2 = $('input[name=color2]:checked').val(),
+    	color3 = $('input[name=color3]:checked').val(),
+    	numsegments = $('select[name=num]').val();
+
     // Generate the scale.
     var colors;
     if (!color3) {
@@ -188,12 +193,10 @@ function generate_scale(color1, color2, color3, numsegments) {
 
 }
 
-function do_generate_scale() {
-    generate_scale(
-    	$('input[name=color1]:checked').val(),
-    	$('input[name=color2]:checked').val(),
-    	$('input[name=color3]:checked').val(),
-    	$('select[name=numcolors]').val());
+function form_changed() {
+    // Save to URL. The hash change listener will pick up the change.
+    window.location = "#" + $('form').serialize().replace(/%23/g, "");
+    generate_scale();
 }
 
 $(function() {
@@ -210,14 +213,41 @@ $(function() {
 		})
 
 		// Attach an event handler to update the scale.
-		input.change(do_generate_scale);
+		input.change(form_changed);
 	})
 
-	$('select').change(do_generate_scale);
+	$('select').change(form_changed);
 
-	do_generate_scale();
+	// Detect when the page location fragment changes. And run
+	// it on first load.
+	$(window).on('hashchange', on_fragment_changed);
+	on_fragment_changed();
+	generate_scale();
+	function on_fragment_changed() {
+        function parse_qs(qs) {
+          // Parse something that looks like a query string. Based on
+          // http://stackoverflow.com/a/2880929/125992.
+          var match,
+            pl     = /\+/g,  // Regex for replacing addition symbol with a space
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+            ret = {};
+          while (match = search.exec(qs))
+            ret[decode(match[1])] = decode(match[2]);
+          return ret;
+        }
+
+        var hash = parse_qs(window.location.hash.substring(1));
+        
+        $('form input').each(function() {
+        	var v = hash[this.getAttribute("name")];
+        	if (v) v = "#" + v; // because it's removed in URL generation
+        	if (this.getAttribute("value") == v)
+        		$(this).prop('checked', true);
+        });
+        $('form select[name=num]').val(hash.num);
+	}
 });
-
         </script>
     </body>
 </html>

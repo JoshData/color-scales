@@ -15,12 +15,37 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" integrity="sha256-VBrFgheoreGl4pKmWgZh3J23pJrhNlSUOBek+8Z2Gv0=" crossorigin="anonymous">
 
+		<link href="https://fonts.googleapis.com/css?family=Bellefair|Raleway" rel="stylesheet">
+
         <style>
+        	body {
+				/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#959595+0,0d0d0d+46,010101+50,0a0a0a+53,4e4e4e+76,383838+87,1b1b1b+100;Black+Gloss+Pipe */
+				background: #959595; /* Old browsers */
+				background: linear-gradient(45deg, #959595 0%,#0d0d0d 46%,#010101 50%,#0a0a0a 53%,#4e4e4e 76%,#383838 87%,#1b1b1b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+				font-family: 'Raleway', sans-serif;
+        	}
+        	.container {
+        		background-color: white;
+        	}
+
             h1 {
+            	margin: 30px 0 0 0;
                 font-weight: bold;
                 text-align: center;
+			    font-family: 'Bellefair', serif;
+            }
+            p.deck {
+            	margin: 0 0 30px 0;
+                text-align: center;
+            }
+
+            .scale {
+            	margin: 1em 0;
+            	border: 1px solid #EEE;
             }
             .scale > div {
+            	vertical-align: middle;
+            	display: inline-block;
                 padding: .5em;
                 text-align: center;
             }
@@ -29,29 +54,91 @@
     <body>
       <div class="container">
 
-        <h1>Perceptually Valid Color Scale Generator</h1>
+        <h1>Color Scale Generator</h1>
+        <p class="deck">Using a Perceptually Valid Color Space</p>
 
-        <div class="row">
-            <div class="col-xs-3">
-                <div id="scale" class="scale">
-                </div>
-            </div>
-            <div class="col-xs-3">
-                <div id="codes" class="scale">
-                </div>
-            </div>
-            <div class="col-xs-3">
-                <div id="monoscale" class="scale">
-                </div>
-            </div>
-            <div class="col-xs-3">
-                <p>A nice monochrome gradient is important for people with visual disabilities for
-                whom hue contrasts are not salient.</p>
-            </div>
+        <div class="panel panel-info">
+        	<div class="panel-body">
+        		<b>Why this page?</b>
+        		There are lots of color scale generators on the web. This
+        		one generates scales for continuous variables based on human color
+        		perception so that neighboring colors have equal separation in both hue and lightness.
+        		Lightness steps are important because not everyone can discriminate
+        		hues the same way.
+        	</div>
         </div>
 
+        <form class="form">
+        <div>
+        	First Color:
+        	<label><input type="radio" name="color1" value="#d7191c" checked> <span>Red</span></label>
+        	<label><input type="radio" name="color1" value="#7b3294"> <span>Purple</span></label>
+        	<label><input type="radio" name="color1" value="#d01c8b"> <span>Pink</span></label>
+        	<label><input type="radio" name="color1" value="#1a9641"> <span>Green</span></label>
+        	<label><input type="radio" name="color1" value="#2c7bb6"> <span>Blue</span></label>
+        	<label><input type="radio" name="color1" value="#000000"> <span>Black</span></label>
+        	<label><input type="radio" name="color1" value="#FFFFFF"> <span>White</span></label>
+        </div>
+        <div>
+        	Second Color:
+        	<label><input type="radio" name="color2" value="#ffffbf" checked> <span>Yellow</span></label>
+        	<label><input type="radio" name="color2" value="#fdae61"> <span>Orange</span></label>
+        	<label><input type="radio" name="color2" value="#f1b6da"> <span>Pink</span></label>
+        	<label><input type="radio" name="color2" value="#abdda4"> <span>Green</span></label>
+        	<label><input type="radio" name="color2" value="#abd9e9"> <span>Blue</span></label>
+        	<label><input type="radio" name="color2" value="#000000"> <span>Black</span></label>
+        	<label><input type="radio" name="color2" value="#E5E5E5"> <span>Grey</span></label>
+        	<label><input type="radio" name="color2" value="#FFFFFF"> <span>White</span></label>
+        </div>
+        <div>
+        	Divergent Scale?
+        	<label><input type="radio" name="color3" value="" checked> None</label>
+        	<label><input type="radio" name="color3" value="#d7191c" checked> <span>Red</span></label>
+        	<label><input type="radio" name="color3" value="#7b3294"> <span>Purple</span></label>
+        	<label><input type="radio" name="color3" value="#d01c8b"> <span>Pink</span></label>
+        	<label><input type="radio" name="color3" value="#1a9641"> <span>Green</span></label>
+        	<label><input type="radio" name="color3" value="#2c7bb6"> <span>Blue</span></label>
+        	<label><input type="radio" name="color3" value="#000000"> <span>Black</span></label>
+        	<label><input type="radio" name="color3" value="#FFFFFF"> <span>White</span></label>
+        </div>
+        <div>
+        	Number:
+        	<select name="numcolors">
+        		<option>3</option>
+        		<option>5</option>
+        		<option>9</option>
+        		<option>11</option>
+        		<option>13</option>
+        		<option>15</option>
+        	</select>
+        </div>
+        </form>
+
+        <hr>
+
+	    <div id="scale" class="scale">
+    	</div>
+	    <div id="hexcodes" class="scale">
+    	</div>
+	    <div id="rgbcodes" class="scale">
+    	</div>
+
+    	<p>Although almost everyone can discriminate hues, not everyone can discriminate the same hues or with the same fidelity. So it&rsquo;s important for the color scale to also vary in lightness. You can verify the lightness looks ok by looking at how the scale would appear to someone who cannot perceive color:</p>
+
+        <div id="monoscale" class="scale">
+        </div>
+
+        <hr>
+
+        <p><b>What&rsquo;s happening here?</b> You&rsquo;re probably familiar with RGB &mdash; the triple of red-green-blue color components that represents colors shown on computer monitors. Unfortunately
+        math in &ldquo;RGB space&rdquo; isn&rsquo;s perceptually valid. Dividing the green component in half doesn&rsquo;t make a color half as green. Adding 50 to all of components makes the color brighter by uneven amounts depending on which color you start with. That&rsquo;s because the sensitivity of human color perception is uneven across the gamut of colors we can see, and the definition of RGB used by computer monitors doesn&rsquo;t follow human perceptual sensitivity.</p>
+
+        <p>Color professionals have come up with alternative measurement systems for colors so that taking consistent arithmetic steps has a perceptually consistent effect. One such system replaces RGB with <a href="https://en.wikipedia.org/wiki/CIELUV">CIE 1976 L*, u*, v* (CIE LUV)</a> color space, and RGB&rsquo;s cylindrical equivalent HSL with <a href="https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCH)">CIELCH</a>. This page uses CIELCH to interpolate colors evenly across their lightness (L), chroma (C, similar to saturation), and hue (H).</p>
+
+        <p>Color math is performed with <a href="https://github.com/d3/d3-color">d3-color</a>. Some of the suggested end colors are inspired by <a href="http://colorbrewer2.org">Color Brewer</a>&rsquo;s end colors.</p>
+
         <footer style="margin: 2em 0">
-          <p>by JoshData</p>
+          <p>This page is by <a href="https://razor.occams.info">JoshData</a>.</p>
         </footer>
       </div>
 
@@ -74,28 +161,61 @@ function generate_scale(color1, color2, color3, numsegments) {
     }
 
     // Show the scale.
-    function show_scale(node, attr) {
+    function show_scale(node, attr, textattr) {
+        node.css({ minHeight: node.height() }); // prevent scroll flicker on rengeration
         node.text('');
+        var width = parseInt(node.innerWidth()/colors.length);
         colors.forEach(function(color) {
             var div = $('<div>');
             div.css({
                 backgroundColor: color[attr] || "inherit",
-                height: 80 / colors.length + "vh",
-                fontSize: 24 / colors.length + "vh",
+                color: attr ? color.bwcontrast : "black",
+                width: width + "px",
+                minHeight: textattr ? '' : (.5*width + "px"),
+                fontSize: attr ? (parseInt(width/5) + "px") : '',
             });
-            if (attr == "")
-                div.html(color.hex + "<br>" + color.css)
+            if (textattr)
+                div.html(color[textattr])
             node.append(div);
         })
+        node.css({ minHeight: '0px' }); // clear
     }
 
     show_scale($("#scale"), 'css');
-    show_scale($("#codes"), '');
+    show_scale($("#hexcodes"), 'css', 'hex');
+    show_scale($("#rgbcodes"), '', 'css');
     show_scale($("#monoscale"), 'monochrome_css');
+
+}
+
+function do_generate_scale() {
+    generate_scale(
+    	$('input[name=color1]:checked').val(),
+    	$('input[name=color2]:checked').val(),
+    	$('input[name=color3]:checked').val(),
+    	$('select[name=numcolors]').val());
 }
 
 $(function() {
-    generate_scale("#a50026", "#ffffbf", "#313695", 15);
+	$('label').each(function() {
+		// Set colors on labels.
+		var input = $(this).find('input');
+		var span = $(this).find('span');
+		span.css({
+			display: 'inline-block',
+			padding: '2px',
+			marginRight: '3px',
+			backgroundColor: input.attr('value'),
+			color: (input.attr('value') != "#FFFFFF" && input.attr('value') != '#ffffbf') ? 'white' : 'black',
+		})
+
+		// Attach an event handler to update the scale.
+		input.change(do_generate_scale);
+	})
+
+	$('select').change(do_generate_scale);
+
+	do_generate_scale();
 });
 
         </script>

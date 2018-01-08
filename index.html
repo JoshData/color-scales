@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- metadata you need to fill in -->
+
+        <title>Perceptually Valid Color Scale Generator</title>
+
+        <meta name="twitter:creator" content="@JoshData" />
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" integrity="sha256-VBrFgheoreGl4pKmWgZh3J23pJrhNlSUOBek+8Z2Gv0=" crossorigin="anonymous">
+
+        <style>
+            h1 {
+                font-weight: bold;
+                text-align: center;
+            }
+            .scale > div {
+                padding: .5em;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+      <div class="container">
+
+        <h1>Perceptually Valid Color Scale Generator</h1>
+
+        <div class="row">
+            <div class="col-xs-3">
+                <div id="scale" class="scale">
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div id="codes" class="scale">
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div id="monoscale" class="scale">
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <p>A nice monochrome gradient is important for people with visual disabilities for
+                whom hue contrasts are not salient.</p>
+            </div>
+        </div>
+
+        <footer style="margin: 2em 0">
+          <p>by JoshData</p>
+        </footer>
+      </div>
+
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <script src="dist/color_scales.js"></script>
+
+        <script>
+function generate_scale(color1, color2, color3, numsegments) {
+    // Generate the scale.
+    var colors;
+    if (!color3) {
+        colors = color_scale(color1, color2, numsegments);
+    } else {
+        numsegments = parseInt(numsegments / 2) + 1;
+        colors = color_scale(color1, color2, numsegments).concat(
+            color_scale(color2, color3, numsegments).slice(1)
+            );
+    }
+
+    // Show the scale.
+    function show_scale(node, attr) {
+        node.text('');
+        colors.forEach(function(color) {
+            var div = $('<div>');
+            div.css({
+                backgroundColor: color[attr] || "inherit",
+                height: 80 / colors.length + "vh",
+                fontSize: 24 / colors.length + "vh",
+            });
+            if (attr == "")
+                div.html(color.hex + "<br>" + color.css)
+            node.append(div);
+        })
+    }
+
+    show_scale($("#scale"), 'css');
+    show_scale($("#codes"), '');
+    show_scale($("#monoscale"), 'monochrome_css');
+}
+
+$(function() {
+    generate_scale("#a50026", "#ffffbf", "#313695", 15);
+});
+
+        </script>
+    </body>
+</html>

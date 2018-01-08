@@ -93,7 +93,7 @@
         <div>
         	Divergent Scale?
         	<label><input type="radio" name="color3" value="" checked> None</label>
-        	<label><input type="radio" name="color3" value="#d7191c" checked> <span>Red</span></label>
+        	<label><input type="radio" name="color3" value="#d7191c"> <span>Red</span></label>
         	<label><input type="radio" name="color3" value="#7b3294"> <span>Purple</span></label>
         	<label><input type="radio" name="color3" value="#d01c8b"> <span>Pink</span></label>
         	<label><input type="radio" name="color3" value="#1a9641"> <span>Green</span></label>
@@ -106,7 +106,7 @@
         	<select name="num">
         		<option>3</option>
         		<option>5</option>
-        		<option>9</option>
+        		<option selected>9</option>
         		<option>11</option>
         		<option>13</option>
         		<option>15</option>
@@ -138,7 +138,7 @@
         <p>Color math is performed with <a href="https://github.com/d3/d3-color">d3-color</a>. Some of the suggested end colors are inspired by <a href="http://colorbrewer2.org">Color Brewer</a>&rsquo;s end colors.</p>
 
         <footer style="margin: 2em 0">
-          <p>This page is by <a href="https://razor.occams.info">JoshData</a>.</p>
+          <p>This page is on GitHub at <a href="https://github.com/JoshData/color-scales">https://github.com/JoshData/color-scales</a> and was created by <a href="https://razor.occams.info">JoshData</a>.</p>
         </footer>
       </div>
 
@@ -245,7 +245,8 @@ $(function() {
         	if (this.getAttribute("value") == v)
         		$(this).prop('checked', true);
         });
-        $('form select[name=num]').val(hash.num);
+        if (hash.num)
+          $('form select[name=num]').val(hash.num);
 	}
 });
         </script>

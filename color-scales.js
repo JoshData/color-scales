@@ -124,9 +124,21 @@ window.get_foreground_for_color = function(clr) {
 window.modify_color = function(c, mod, power) {
 	if (c === "") return "";
 	c = d3color.hcl(c);
-	if (mod == "lighter")
-		c.l = 100 * (c.l/100)**(1-power); // closer to 100
-	if (mod == "darker")
-		c.l = 100 * (c.l/100)**(1/(1-power)); // closer to 0
+
+	// Shift, scale, and warp toward to 100 or 0.
+	// Warping by using an exponent is good for colors
+	// whose lightness is in the middle of the range
+	// but has little effect near black and white. So
+	// also shift the white and black points.
+	var shift = power/11;
+	var warp = power/9;
+	if (mod == "lighter") {
+		c.l = 100 * (c.l/100)**(1-warp); // warp
+		c.l = 100*shift + (1-shift)*c.l; // shift and scale
+	}
+	if (mod == "darker") {
+		c.l = 100 * (c.l/100)**(1/(1-warp)); // warp
+		c.l = (1-shift)*c.l; // scale
+	}
 	return c;
 }

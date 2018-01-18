@@ -173,13 +173,13 @@ function generate_scale() {
     // Apply color modifier.
     var mod = $('select[name=mod]').val();
     if (mod != "contrast") {
-        color1 = modify_color(color1, mod, .25);
-        color2 = modify_color(color2, mod, .25);
-        color3 = modify_color(color3, mod, .25);
+        color1 = modify_color(color1, mod, 1);
+        color2 = modify_color(color2, mod, 1);
+        color3 = modify_color(color3, mod, 1);
     } else {
-        color1 = modify_color(color1, "darker", .25);
-        color2 = modify_color(color2, "lighter", .25);
-        color3 = modify_color(color3, "darker", .25);
+        color1 = modify_color(color1, "darker", 1);
+        color2 = modify_color(color2, "lighter", 1);
+        color3 = modify_color(color3, "darker", 1);
     }
 
     // Generate the scale.

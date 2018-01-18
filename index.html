@@ -209,7 +209,7 @@ $(function() {
 			padding: '2px',
 			marginRight: '3px',
 			backgroundColor: input.attr('value'),
-			color: (input.attr('value') != "#FFFFFF" && input.attr('value') != '#ffffbf') ? 'white' : 'black',
+			color: get_foreground_for_color(input.attr('value')),
 		})
 
 		// Attach an event handler to update the scale.

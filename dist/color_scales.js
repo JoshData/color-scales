@@ -85,9 +85,9 @@ function bwcontrast(c) {
 	// text color that will be most contrast-y with
 	// then given color.
 	c = d3color.hcl(c);
-	if (c.l < 60) c.l = 90;
-	else c.l = 10;
-	c.c /= 3;
+	if (c.l < 60) c.l = 93; // white-ish
+	else c.l = 7; // black-ish
+	c.c /= 5; // reduce chroma (saturation)
 	return c;
 }
 
@@ -113,6 +113,10 @@ window.color_scale = function(clr1, clr2, segments) {
 		})
 	}
 	return ret;
+}
+
+window.get_foreground_for_color = function(clr) {
+	return bwcontrast(clr).toString();
 }
 
 },{"d3-color":2}],2:[function(require,module,exports){

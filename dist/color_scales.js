@@ -30,8 +30,11 @@ function interp(c1, c2, v) {
 	// like white and black --- their hues don't matter!
 	// That ruins the interpolation because we're pulling
 	// mid-point values toward a hue that isn't actually
-	// perceptually apparent. The chroma value doesn't
-	// matter in a different way -- it must be zero.
+	// perceptually apparent. Fix this by not using a linear
+	// interpolation when one of the colors is near the chroma
+	// axis: the closer to chroma zero it is, the more the
+	// interpolation for hues is stretched to stay closer to
+	// the other color's hues.
 	function min(a, b) { return a > b ? b : a; }
 	function max(a, b) { return a < b ? b : a; }
 	function safepow(a, b) { return isFinite(b) ? a**b : 0; }

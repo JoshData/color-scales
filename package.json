@@ -1,0 +1,24 @@
+{
+  "name": "perceptual-color-scales-generator",
+  "version": "1.0.0",
+  "description": "In-Browser Color Scale Generator Using a Perceptually Valid Color Space",
+  "main": "color-scales.js",
+  "dependencies": {
+    "browserify": "^15.2.0",
+    "d3-color": "^1.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoshData/color-scales.git"
+  },
+  "author": "Joshua Tauberer",
+  "license": " CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/JoshData/color-scales/issues"
+  },
+  "homepage": "https://github.com/JoshData/color-scales#readme"
+}

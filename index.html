@@ -39,6 +39,14 @@
                 text-align: center;
             }
 
+            #selects label {
+                font-weight: normal;
+                margin-left: 1em;
+            }
+                #selects label:first-child {
+                    margin-left: 0;
+                }
+
             .scale {
             	margin: 1em 0;
             	border: 1px solid #EEE;
@@ -101,9 +109,9 @@
         	<label><input type="radio" name="color3" value="#000000"> <span>Black</span></label>
         	<label><input type="radio" name="color3" value="#FFFFFF"> <span>White</span></label>
         </div>
-        <div>
-        	Number:
-        	<select name="num">
+        <div id="selects" style="margin-top: 4px;">
+        	<label for="numsegments">Segments:</label>
+        	<select id="numsegments" name="num">
         		<option>3</option>
         		<option>5</option>
         		<option selected>9</option>
@@ -111,6 +119,14 @@
         		<option>13</option>
         		<option>15</option>
         	</select>
+
+            <label for="mod">Tweak:</label>
+            <select id="mod" name="mod">
+                <option value="" selected>No Tweak</option>
+                <option value="lighter">Lighter</option>
+                <option value="darker">Darker</option>
+                <option value="contrast">More Contrast</option>
+            </select>
         </div>
         </form>
 
@@ -153,6 +169,18 @@ function generate_scale() {
     	color2 = $('input[name=color2]:checked').val(),
     	color3 = $('input[name=color3]:checked').val(),
     	numsegments = $('select[name=num]').val();
+
+    // Apply color modifier.
+    var mod = $('select[name=mod]').val();
+    if (mod != "contrast") {
+        color1 = modify_color(color1, mod, .25);
+        color2 = modify_color(color2, mod, .25);
+        color3 = modify_color(color3, mod, .25);
+    } else {
+        color1 = modify_color(color1, "darker", .25);
+        color2 = modify_color(color2, "lighter", .25);
+        color3 = modify_color(color3, "darker", .25);
+    }
 
     // Generate the scale.
     var colors;

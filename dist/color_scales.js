@@ -122,6 +122,16 @@ window.get_foreground_for_color = function(clr) {
 	return bwcontrast(clr).toString();
 }
 
+window.modify_color = function(c, mod, power) {
+	if (c === "") return "";
+	c = d3color.hcl(c);
+	if (mod == "lighter")
+		c.l = 100 * (c.l/100)**(1-power); // closer to 100
+	if (mod == "darker")
+		c.l = 100 * (c.l/100)**(1/(1-power)); // closer to 0
+	return c;
+}
+
 },{"d3-color":2}],2:[function(require,module,exports){
 // https://d3js.org/d3-color/ Version 1.0.3. Copyright 2017 Mike Bostock.
 (function (global, factory) {

@@ -139,6 +139,10 @@
 	    <div id="rgbcodes" class="scale">
     	</div>
 
+        <center style="margin: 15px;">
+            <a id="download" class="btn btn-default" style="font-family: sans-serif;">Download <span></span>x1px Image</a>
+        </center>
+
     	<p>Although almost everyone can discriminate hues, not everyone can discriminate the same hues or with the same fidelity. So it&rsquo;s important for the color scale to also vary in lightness. You can verify the lightness looks ok by looking at how the scale would appear to someone who cannot perceive color:</p>
 
         <div id="monoscale" class="scale">
@@ -219,6 +223,20 @@ function generate_scale() {
     show_scale($("#rgbcodes"), '', 'css');
     show_scale($("#monoscale"), 'monochrome_css');
 
+    // Create a downloadable image.
+    var canvas = document.createElement("CANVAS");
+    canvas.setAttribute('width', colors.length);
+    canvas.setAttribute('height', 1);
+    var canvasctx = canvas.getContext("2d");
+    var pixels = canvasctx.createImageData(colors.length, 1);
+    for (var i = 0; i < colors.length; i++) {
+        pixels.data[i*4+0] = colors[i].rgb.r;
+        pixels.data[i*4+1] = colors[i].rgb.g;
+        pixels.data[i*4+2] = colors[i].rgb.b;
+        pixels.data[i*4+3] = 255; // alpha
+    }
+    canvasctx.putImageData(pixels, 0, 0);
+    $('#download').attr('href', canvas.toDataURL('image/png'));
 }
 
 function form_changed() {
@@ -275,6 +293,8 @@ $(function() {
         });
         if (hash.num)
           $('form select[name=num]').val(hash.num);
+
+        $('#download span').text($('form select[name=num]').val())
 	}
 });
         </script>
